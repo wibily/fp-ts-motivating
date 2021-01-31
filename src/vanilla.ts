@@ -4,11 +4,11 @@ const maxProfit = (id: string): Promise<number> => {
   const doPricingAndInv = () => {
     return pricing(id).then(
       (pricing) => {
-        if (pricing && pricing.pricing) {
+        if (pricing?.pricing) {
           const unitPrice = pricing.pricing;
           return inventory(id).then(
             (inv) => {
-              if (inv && inv.number && inv.number > 0) {
+              if (inv?.number && inv.number > 0) {
                 return Promise.resolve(unitPrice * inv.number);
               } else {
                 return Promise.resolve(0);
@@ -26,7 +26,7 @@ const maxProfit = (id: string): Promise<number> => {
 
   return legal(id).then(
     (legal) => {
-      if (legal && legal.isIllegal) {
+      if (legal?.isIllegal) {
         return Promise.resolve(0);
       } else {
         return doPricingAndInv();
@@ -36,4 +36,4 @@ const maxProfit = (id: string): Promise<number> => {
   );
 };
 
-maxProfit("a").then(console.log);
+// maxProfit("a").then(console.log);

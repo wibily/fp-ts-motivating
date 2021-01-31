@@ -15,7 +15,8 @@ export const pricing = (id: string): Promise<Price> => {
       });
     case "b":
       return Promise.resolve({
-        id: "b"
+        id: "b",
+        pricing: 20
       });
     case "c":
       return Promise.resolve({
@@ -46,7 +47,7 @@ export const inventory = (id: string): Promise<Inventory> => {
     case "b":
       return Promise.resolve({
         id: "b",
-        number: 0
+        number: 10
       });
     case "c":
       return Promise.resolve({
