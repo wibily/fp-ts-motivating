@@ -1,5 +1,5 @@
 import { pricing, inventory, legal } from "./api";
-import { constant, flow, pipe } from "fp-ts/lib/function";
+import { constant, pipe } from "fp-ts/lib/function";
 
 import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
@@ -10,7 +10,7 @@ const isIllegal = (id: string): T.Task<O.Option<boolean>> =>
   pipe(
     legal(id).then(
       (value) => O.fromNullable(value?.isIllegal),
-      constant(O.none)
+      constant(O.some(false))
     ),
     constant
   );
@@ -30,17 +30,18 @@ const getPricing = (id: string): T.Task<O.Option<number>> =>
 const getInventory = (id: string): T.Task<O.Option<number>> =>
   pipe(
     inventory(id).then(
-      (value) => O.fromNullable(value?.number),
+      (value) => O.fromNullable(value?.units),
       constant(O.none)
     ),
     constant
   );
 
 const maxValue = (isIllegal: boolean) => (price: number) => (qty: number) =>
-  isIllegal ? 0 : price * qty;
+  isIllegal ? 2 * price * qty : price * qty;
 
 const A = getApplicativeComposition(T.task, O.option);
 
+// f <$> fa <*> fb <*> fc 
 const maxProfit = (id:string) => A.ap(A.ap(A.map(isIllegal(id), maxValue), getPricing(id)), getInventory(id))();
 
 maxProfit('a').then(console.log)

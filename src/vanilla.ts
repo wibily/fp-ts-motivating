@@ -8,8 +8,8 @@ const maxProfit = (id: string): Promise<number> => {
           const unitPrice = pricing.pricing;
           return inventory(id).then(
             (inv) => {
-              if (inv?.number && inv.number > 0) {
-                return Promise.resolve(unitPrice * inv.number);
+              if (inv?.units && inv.units > 0) {
+                return Promise.resolve(unitPrice * inv.units);
               } else {
                 return Promise.resolve(0);
               }
@@ -36,4 +36,4 @@ const maxProfit = (id: string): Promise<number> => {
   );
 };
 
-// maxProfit("a").then(console.log);
+maxProfit("a").then(res => console.log('vanilla',res));

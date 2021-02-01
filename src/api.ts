@@ -11,7 +11,7 @@ export const pricing = (id: string): Promise<Price> => {
     case "a":
       return Promise.resolve({
         id: "a",
-        pricing: 1
+        pricing: 10
       });
     case "b":
       return Promise.resolve({
@@ -32,7 +32,7 @@ export const pricing = (id: string): Promise<Price> => {
 export type Inventory =
   | {
       id: string;
-      number?: number;
+      units?: number;
     }
   | null
   | undefined;
@@ -71,7 +71,7 @@ export type Legal =
 export const legal = (id: string): Promise<Legal> => {
   switch (id) {
     case "a":
-      return Promise.resolve({
+      return Promise.reject({
         id: "a",
         isIllegal: false
       });
